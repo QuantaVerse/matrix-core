@@ -8,12 +8,9 @@ export class MatrixCoreController {
         this.logger.setContext(MatrixCoreController.name);
     }
 
-    @Get()
+    @Get("/health")
     getHello(): string {
-        this.logger.debug(`getHealth`);
-        this.logger.verbose(`getHealth`);
         this.logger.log(`getHealth`);
-        this.logger.warn(`getHealth`);
         return this.matrixCoreService.getHello();
     }
 }

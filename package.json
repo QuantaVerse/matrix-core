@@ -2,9 +2,9 @@
     "name": "matrix-core",
     "version": "0.0.1",
     "description": "",
-    "author": "",
-    "private": true,
-    "license": "UNLICENSED",
+    "author": "Pritam Sarkar",
+    "private": false,
+    "license": "GPL-3.0-or-later",
     "scripts": {
         "prebuild": "rimraf dist",
         "build": "nest build",
@@ -29,14 +29,12 @@
         "@nestjs/swagger": "4.7.5",
         "bunyan": "1.8.14",
         "bunyan-format": "0.2.1",
+        "class-transformer": "0.3.1",
+        "class-validator": "0.12.2",
         "fastify-swagger": "3.5.0",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",
         "rxjs": "^6.5.4"
-    },
-    "peerDependencies": {
-        "class-transformer": "0.3.1",
-        "class-validator": "0.12.2"
     },
     "devDependencies": {
         "@nestjs/cli": "^7.0.0",
@@ -73,6 +71,10 @@
         },
         "coverageDirectory": "../coverage",
         "testEnvironment": "node"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/QuantaVerse/matrix-core.git"
     },
     "volta": {
         "node": "14.15.1",
