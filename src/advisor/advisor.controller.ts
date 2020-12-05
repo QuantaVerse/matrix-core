@@ -8,7 +8,7 @@ export class AdvisorController {
         this.logger.setContext(AdvisorController.name);
     }
 
-    @Get("/health")
+    @Get("health")
     getHello(): string {
         this.logger.log(`getHealth`);
         return this.advisorService.getHello();
