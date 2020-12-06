@@ -1,21 +1,21 @@
 import { NestFactory } from "@nestjs/core";
-import { MatrixCoreModule } from "./matrix.core.module";
+import { AppModule } from "./app.module";
 import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { LoggerService } from "@nestjs/common/services/logger.service";
-import { CustomLogger } from "./logger/custom.logger";
+import { LoggerService } from "./shared/services/logger.service";
 
 async function bootstrap() {
-    const customLogger: LoggerService = new CustomLogger();
+    console.log(`Starting application bootstrap`);
+    const loggerService: LoggerService = new LoggerService();
 
     const app = await NestFactory.create<NestFastifyApplication>(
-        MatrixCoreModule,
+        AppModule,
         new FastifyAdapter(),
         {
-            logger: customLogger
+            logger: loggerService
         }
     );
-    app.useLogger(customLogger);
+    app.useLogger(loggerService);
 
     const options = new DocumentBuilder()
         .setTitle("Matrix Core")

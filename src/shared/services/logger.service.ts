@@ -4,8 +4,8 @@ import * as bunyanFormat from "bunyan-format";
 import * as colors from "colors";
 
 @Injectable({ scope: Scope.TRANSIENT })
-export class CustomLogger extends Logger {
-    private readonly bunyanLogger: Bunyan;
+export class LoggerService extends Logger {
+    private readonly _logger: Bunyan;
     private isEmpty = (obj) => [Object, Array].includes((obj || {}).constructor) && !Object.entries(obj || {}).length;
 
     /**
@@ -43,7 +43,7 @@ export class CustomLogger extends Logger {
         const defaultStream: Bunyan.Stream = { level: "info", type: "stream", stream: bunyanFormat(formatterOptions) };
         const streams: Bunyan.Stream[] = [defaultStream, ...(customStreams || [])];
 
-        this.bunyanLogger = Bunyan.createLogger({
+        this._logger = Bunyan.createLogger({
             level: Bunyan.INFO,
             name: projectId,
             streams: [...streams]
@@ -52,26 +52,26 @@ export class CustomLogger extends Logger {
 
     public debug(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this.bunyanLogger.info({ context }, ...message.map((msg) => colors.blue(msg)));
+        this._logger.info({ context }, ...message.map((msg) => colors.blue(msg)));
     }
 
     public verbose(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this.bunyanLogger.info({ context }, ...message.map((msg) => colors.black(msg)));
+        this._logger.info({ context }, ...message.map((msg) => colors.black(msg)));
     }
 
     public log(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this.bunyanLogger.info({ context }, ...message);
+        this._logger.info({ context }, ...message);
     }
 
     public warn(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this.bunyanLogger.warn({ context }, ...message.map((msg) => colors.yellow(msg)));
+        this._logger.warn({ context }, ...message.map((msg) => colors.yellow(msg)));
     }
 
     public error(message: any | any[], trace?: string | undefined, context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this.bunyanLogger.error({ context, trace }, ...message.map((msg) => colors.red(msg)));
+        this._logger.error({ context, trace }, ...message.map((msg) => colors.red(msg)));
     }
 }
