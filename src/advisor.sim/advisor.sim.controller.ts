@@ -1,10 +1,10 @@
 import { Controller, Get } from "@nestjs/common";
 import { AdvisorSimService } from "./advisor.sim.service";
-import { LoggerService } from "../shared/services/logger.service";
+import { CustomLoggerService } from "../shared/services/logger.service";
 
 @Controller("advisor/simulation")
 export class AdvisorSimController {
-    constructor(private readonly simulationService: AdvisorSimService, private logger: LoggerService) {
+    constructor(private readonly simulationService: AdvisorSimService, private logger: CustomLoggerService) {
         this.logger.setContext(AdvisorSimController.name);
     }
 

@@ -4,7 +4,7 @@ import * as bunyanFormat from "bunyan-format";
 import * as colors from "colors";
 
 @Injectable({ scope: Scope.TRANSIENT })
-export class LoggerService extends Logger {
+export class CustomLoggerService extends Logger {
     private readonly _logger: Bunyan;
     private isEmpty = (obj) => [Object, Array].includes((obj || {}).constructor) && !Object.entries(obj || {}).length;
 
