@@ -1,9 +1,11 @@
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
 import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import * as morgan from 'morgan';
+
+import { AppModule } from "./app.module";
+import { MORGAN_CUSTOM_FORMAT } from "./config/morgan.config";
 import { CustomLoggerService } from "./shared/services/logger.service";
-import * as morgan from 'morgan'; // HTTP request logger
 
 async function bootstrap() {
     console.log(`Starting application bootstrap`);
@@ -16,10 +18,13 @@ async function bootstrap() {
             logger: loggerService
         }
     );
+
+    // common logger middleware
     app.useLogger(loggerService);
+    // HTTP request logger middleware
     app.use(
         morgan(
-            ':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :response-time ms :res[content-length] bytes ":referrer" ":user-agent"',
+            `${MORGAN_CUSTOM_FORMAT}`,
             {
                 stream: {
                     write: message => {
@@ -44,6 +49,7 @@ async function bootstrap() {
     await app.listen(3000, '0.0.0.0');
     console.log(`Application is running on: ${await app.getUrl()}`);
 }
+
 bootstrap().then(() => {
     console.log(`Bootstrap completed : MatrixCoreModule loaded`);
 });

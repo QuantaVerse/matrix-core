@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
-import { AdvisorService } from "./advisor.service";
+
 import { AdvisorController } from "./advisor.controller";
+import { AdvisorService } from "./advisor.service";
 
 @Module({
     imports: [],
