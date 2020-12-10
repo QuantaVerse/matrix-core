@@ -11,5 +11,4 @@ import { SharedModule } from "./shared/shared.module";
     controllers: [AppController],
     providers: [AppService]
 })
-
 export class AppModule {}

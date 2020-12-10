@@ -8,7 +8,7 @@ import { AdvisorSimService } from "./advisor.sim.service";
     imports: [CqrsModule],
     controllers: [AdvisorSimController],
     providers: [
-        AdvisorSimService,
+        AdvisorSimService
         // ...CommandHandlers,
         // ...EventHandlers,
         // ...QueryHandlers,

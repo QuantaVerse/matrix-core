@@ -6,7 +6,7 @@ import * as colors from "colors";
 @Injectable({ scope: Scope.TRANSIENT })
 export class CustomLoggerService extends Logger {
     private readonly _logger: Bunyan;
-    private isEmpty = (obj) => [Object, Array].includes((obj || {}).constructor) && !Object.entries(obj || {}).length;
+    private isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries(obj || {}).length;
 
     /**
      * Creates an instance of BunyanLoggerService.
@@ -23,18 +23,20 @@ export class CustomLoggerService extends Logger {
      * @instance BunyanLoggerService
      * @param options
      */
-    constructor(options: {
-        projectId: string;
-        formatterOptions: {
-            [key: string]: any;
-        };
-        customStreams?: Bunyan.Stream[];
-    } = {
-        projectId: "matrix-core",
-        formatterOptions: {
-            outputMode: "long"
+    constructor(
+        options: {
+            projectId: string;
+            formatterOptions: {
+                [key: string]: any;
+            };
+            customStreams?: Bunyan.Stream[];
+        } = {
+            projectId: "matrix-core",
+            formatterOptions: {
+                outputMode: "long"
+            }
         }
-    }) {
+    ) {
         super();
         const { projectId, formatterOptions, customStreams } = options;
         if (projectId == null || this.isEmpty(projectId)) {
@@ -53,12 +55,12 @@ export class CustomLoggerService extends Logger {
 
     public debug(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.info({ context }, ...message.map((msg) => colors.blue(msg)));
+        this._logger.info({ context }, ...message.map(msg => colors.blue(msg)));
     }
 
     public verbose(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.info({ context }, ...message.map((msg) => colors.black(msg)));
+        this._logger.info({ context }, ...message.map(msg => colors.black(msg)));
     }
 
     public log(message: any | any[], context: string | undefined = this.context) {
@@ -68,16 +70,16 @@ export class CustomLoggerService extends Logger {
 
     public warn(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.warn({ context }, ...message.map((msg) => colors.yellow(msg)));
+        this._logger.warn({ context }, ...message.map(msg => colors.yellow(msg)));
     }
 
     public error(message: any | any[], trace?: string | undefined, context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.error({ context, trace }, ...message.map((msg) => colors.red(msg)));
+        this._logger.error({ context, trace }, ...message.map(msg => colors.red(msg)));
     }
 
     public track(message: any | any[], error: Error, trace?: string | undefined, context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.error({ context, trace, err: error }, ...message.map((msg) => colors.red(msg)));
+        this._logger.error({ context, trace, err: error }, ...message.map(msg => colors.red(msg)));
     }
 }

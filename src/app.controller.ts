@@ -5,11 +5,7 @@ import { CustomLoggerService } from "./shared/services/logger.service";
 
 @Controller()
 export class AppController {
-
-    constructor(
-        private readonly _appService: AppService,
-        private _logger: CustomLoggerService
-    ) {
+    constructor(private readonly _appService: AppService, private _logger: CustomLoggerService) {
         this._logger.setContext(AppController.name);
     }
 

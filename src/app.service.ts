@@ -4,7 +4,6 @@ import { CustomLoggerService } from "./shared/services/logger.service";
 
 @Injectable()
 export class AppService {
-
     constructor(private _logger: CustomLoggerService) {
         this._logger.setContext(AppService.name);
     }
@@ -23,7 +22,7 @@ export class AppService {
     }
 
     exceptionalHello(hello?: string): string {
-        if(hello) {
+        if (hello) {
             return hello;
         } else {
             throw new Error("Exceptional Hello World!");

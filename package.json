@@ -1,7 +1,7 @@
 {
     "name": "matrix-core",
     "version": "0.0.1",
-    "description": "",
+    "description": "Core backend service for Matrix application",
     "author": "Pritam Sarkar",
     "private": false,
     "license": "GPL-3.0-or-later",
@@ -54,7 +54,9 @@
         "eslint-config-prettier": "^6.10.0",
         "eslint-plugin-import": "^2.20.1",
         "eslint-plugin-simple-import-sort": "6.0.1",
+        "husky": "4.3.5",
         "jest": "26.4.2",
+        "lint-staged": "10.5.3",
         "prettier": "^1.19.1",
         "supertest": "^4.0.2",
         "ts-jest": "26.2.0",
@@ -62,6 +64,18 @@
         "ts-node": "9.0.0",
         "tsconfig-paths": "^3.9.0",
         "typescript": "^3.7.4"
+    },
+    "lint-staged": {
+        "{src,test}/**/*.{js,ts}": [
+            "npm run format",
+            "npm run lint",
+            "git add ."
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     },
     "jest": {
         "moduleFileExtensions": [
@@ -81,6 +95,13 @@
         "type": "git",
         "url": "https://github.com/QuantaVerse/matrix-core.git"
     },
+    "keywords": [
+        "matrix"
+    ],
+    "bugs": {
+        "url": "https://github.com/QuantaVerse/matrix-core/issues"
+    },
+    "homepage": "https://github.com/QuantaVerse/matrix-core#readme",
     "volta": {
         "node": "14.15.1",
         "npm": "6.14.9"
