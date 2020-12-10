@@ -22,8 +22,20 @@ export class AppService {
         return "Hello World!";
     }
 
+    exceptionalHello(hello?: string): string {
+        if(hello) {
+            return hello;
+        } else {
+            throw new Error("Exceptional Hello World!");
+        }
+    }
+
     async getExceptionHello(): Promise<string> {
-        this._logger.error("A make believe exception : To be ignored");
-        throw new HttpException("Exceptional Hello World!", 500);
+        try {
+            return this.exceptionalHello();
+        } catch (e) {
+            this._logger.track("A make believe exception : To be ignored", e);
+            throw new HttpException(e.toString(), 500);
+        }
     }
 }

@@ -46,7 +46,8 @@ export class CustomLoggerService extends Logger {
         this._logger = Bunyan.createLogger({
             level: Bunyan.INFO,
             name: projectId,
-            streams: [...streams]
+            streams: [...streams],
+            serializers: Bunyan.stdSerializers
         });
     }
 
@@ -73,5 +74,10 @@ export class CustomLoggerService extends Logger {
     public error(message: any | any[], trace?: string | undefined, context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
         this._logger.error({ context, trace }, ...message.map((msg) => colors.red(msg)));
+    }
+
+    public track(message: any | any[], error: Error, trace?: string | undefined, context: string | undefined = this.context) {
+        message = Array.isArray(message) ? message : [message];
+        this._logger.error({ context, trace, err: error }, ...message.map((msg) => colors.red(msg)));
     }
 }

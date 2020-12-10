@@ -32,6 +32,8 @@
         "bunyan-format": "0.2.1",
         "class-transformer": "0.3.1",
         "class-validator": "0.12.2",
+        "fastify-helmet": "5.0.3",
+        "fastify-rate-limit": "4.1.0",
         "fastify-swagger": "3.5.0",
         "morgan": "1.10.0",
         "reflect-metadata": "^0.1.13",
