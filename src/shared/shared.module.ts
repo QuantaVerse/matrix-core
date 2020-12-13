@@ -1,8 +1,9 @@
 import { Global, HttpModule, Module } from "@nestjs/common";
 
+import { ConfigService } from "./services/config.service";
 import { CustomLoggerService } from "./services/logger.service";
 
-const providers = [CustomLoggerService];
+const providers = [ConfigService, CustomLoggerService];
 
 @Global()
 @Module({
