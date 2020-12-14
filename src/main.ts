@@ -10,7 +10,7 @@ import { fetchMorganOptions, MORGAN_CUSTOM_FORMAT } from "./config/logging/morga
 import { fetchCORSOptions } from "./config/security/cors.config";
 import { fetchHelmetOptions } from "./config/security/helmet.config";
 import { fetchRateLimiterOptions } from "./config/security/rate.limiter.config";
-import { setupSwagger } from "./config/swagger/setup";
+import { setupSwagger } from "./config/swagger/swagger.setup";
 import { APPLICATION_START_TIMER_STRING } from "./constants/app.constants";
 import { ConfigService } from "./shared/services/config.service";
 import { CustomLoggerService } from "./shared/services/logger.service";
@@ -20,12 +20,13 @@ console.time(APPLICATION_START_TIMER_STRING);
 
 async function bootstrap() {
     console.log(`Starting application bootstrap`);
-    const loggerService: CustomLoggerService = new CustomLoggerService();
 
     const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
-        logger: loggerService,
         cors: fetchCORSOptions()
     });
+
+    const configService = app.select(SharedModule).get(ConfigService);
+    const loggerService = await app.select(SharedModule).resolve(CustomLoggerService);
 
     // common logger middleware
     app.useLogger(loggerService);
@@ -37,7 +38,6 @@ async function bootstrap() {
     // brute force protection via Fastify plugin
     await app.register(fastifyRateLimit, fetchRateLimiterOptions());
 
-    const configService = app.select(SharedModule).get(ConfigService);
     if ([EnvironmentEnum.Development, EnvironmentEnum.Staging].includes(configService.nodeEnv)) {
         setupSwagger(app, configService.swaggerConfig);
     }
