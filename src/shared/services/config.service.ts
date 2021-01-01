@@ -1,10 +1,12 @@
 import { Injectable } from "@nestjs/common";
+import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import * as Bunyan from "bunyan";
 import * as bunyanFormat from "bunyan-format";
 import * as dotenv from "dotenv";
 
 import { EnvironmentEnum, getEnvironmentEnum } from "../../common/enums/environment.enum";
 import { ISwaggerConfigInterface } from "../../common/interfaces/swagger-config.interface";
+import { SnakeNamingStrategy } from "../../config/db/snake-naming-strategy";
 
 @Injectable()
 export class ConfigService {
@@ -62,14 +64,14 @@ export class ConfigService {
             {
                 type: "rotating-file",
                 level: defaultLevel,
-                path: "logs/matrix-core-log.log",
+                path: "logs/matrix-core-logs",
                 period: "1h",
                 count: 6
             },
             {
                 type: "rotating-file",
                 level: Bunyan.WARN,
-                path: "logs/matrix-core-warn.log",
+                path: "logs/matrix-core-warns",
                 period: "24h",
                 count: 14
             }
@@ -80,6 +82,41 @@ export class ConfigService {
             name: projectId,
             streams: [...streams],
             serializers: Bunyan.stdSerializers
+        };
+    }
+
+    public get typeOrmConfig(): TypeOrmModuleOptions {
+        let entities = [__dirname + "/../../modules/**/*.entity{.ts,.js}"];
+        let migrations = [__dirname + "/../../migrations/*{.ts,.js}"];
+
+        if ((module as any).hot) {
+            const entityContext = (require as any).context("./../../modules", true, /\.entity\.ts$/);
+            entities = entityContext.keys().map(id => {
+                const entityModule = entityContext(id);
+                const [entity] = Object.values(entityModule);
+                return entity;
+            });
+            const migrationContext = (require as any).context("./../../migrations", false, /\.ts$/);
+            migrations = migrationContext.keys().map(id => {
+                const migrationModule = migrationContext(id);
+                const [migration] = Object.values(migrationModule);
+                return migration;
+            });
+        }
+
+        return {
+            entities,
+            migrations,
+            keepConnectionAlive: true,
+            type: "postgres",
+            host: this.get("PG_HOST"),
+            port: this.getNumber("PG_PORT"),
+            username: this.get("PG_USERNAME"),
+            password: this.get("PG_PASSWORD"),
+            database: this.get("PG_DATABASE"),
+            migrationsRun: true,
+            logging: this.nodeEnv === "development",
+            namingStrategy: new SnakeNamingStrategy()
         };
     }
 }

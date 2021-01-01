@@ -11,9 +11,9 @@
 ## First-time setup
 
 Make sure you have the following installed:
-- [Volta](https://volta.sh/)
-- [Node](https://nodejs.org/en/) (at least v14)
-- [Npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (at least v6.0)
+- [Volta](https://volta.sh/) (at least v1.0)
+- [Node](https://nodejs.org/en/) (at least v14.15)
+- [Npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (at least v6.14)
 
 Then update the following files to suit your application:
 
@@ -35,11 +35,11 @@ npm install
 Before start please install Postgres and fill correct configurations in `.env.dev` file
 
 ```env
-MYSQL_HOST=localhost
-MYSQL_PORT=3306
-MYSQL_USERNAME=user
-MYSQL_PASSWORD=user
-MYSQL_DATABASE=b2h_microservice_db
+PG_HOST=127.0.0.1
+PG_PORT=5432
+PG_USERNAME=admin
+PG_PASSWORD=password
+PG_DATABASE=matrix
 ```
 
 ```bash
