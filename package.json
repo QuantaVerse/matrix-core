@@ -9,6 +9,7 @@
         "prebuild": "rimraf dist",
         "commit": "npx git-cz",
         "build": "nest build",
+        "release": "npx -p semantic-release --no-ci --debug",
         "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
         "lint": "eslint '{src,apps,libs,test}/**/*.ts'",
         "lint:fix": "eslint '{src,apps,libs,test}/**/*.ts' --fix",
@@ -41,6 +42,12 @@
         "@nestjs/platform-fastify": "7.5.4",
         "@nestjs/swagger": "4.7.5",
         "@nestjs/typeorm": "7.1.5",
+        "@semantic-release/changelog": "5.0.1",
+        "@semantic-release/commit-analyzer": "8.0.1",
+        "@semantic-release/git": "9.0.0",
+        "@semantic-release/github": "7.2.0",
+        "@semantic-release/npm": "7.0.9",
+        "@semantic-release/release-notes-generator": "9.0.1",
         "bunyan": "1.8.14",
         "bunyan-format": "0.2.1",
         "class-transformer": "0.3.1",
@@ -54,6 +61,7 @@
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",
         "rxjs": "^6.5.4",
+        "semantic-release": "17.3.1",
         "typeorm": "0.2.29"
     },
     "devDependencies": {
