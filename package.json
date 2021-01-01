@@ -32,6 +32,9 @@
         "npm": ">=6.14.0"
     },
     "dependencies": {
+        "@commitlint/cli": "11.0.0",
+        "@commitlint/config-conventional": "11.0.0",
+        "@commitlint/lint": "11.0.0",
         "@nestjs/common": "^7.0.0",
         "@nestjs/core": "^7.0.0",
         "@nestjs/cqrs": "7.0.1",
@@ -44,10 +47,12 @@
         "bunyan-format": "0.2.1",
         "class-transformer": "0.3.1",
         "class-validator": "0.12.2",
+        "cz-conventional-changelog": "3.3.0",
         "dotenv": "8.2.0",
         "fastify-helmet": "5.0.3",
         "fastify-rate-limit": "4.1.0",
         "fastify-swagger": "3.5.0",
+        "git-cz": "4.7.6",
         "morgan": "1.10.0",
         "pg": "8.5.1",
         "reflect-metadata": "^0.1.13",
@@ -87,9 +92,16 @@
             "git add ."
         ]
     },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog",
+            "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+        }
+    },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     },
     "jest": {
