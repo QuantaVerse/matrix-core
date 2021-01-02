@@ -3,6 +3,7 @@ import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import * as Bunyan from "bunyan";
 import * as bunyanFormat from "bunyan-format";
 import * as dotenv from "dotenv";
+import { existsSync } from "fs";
 
 import { EnvironmentEnum, getEnvironmentEnum } from "../../common/enums/environment.enum";
 import { ISwaggerConfigInterface } from "../../common/interfaces/swagger-config.interface";
@@ -10,9 +11,19 @@ import { SnakeNamingStrategy } from "../../config/db/snake-naming-strategy";
 
 @Injectable()
 export class ConfigService {
+    private readonly ENV_FILE_NAME: string = ".env";
+
     constructor() {
+        try {
+            if (!existsSync(this.ENV_FILE_NAME)) {
+                console.error(`ConfigService: env file "${this.ENV_FILE_NAME}" not found!`);
+                process.exit(); // force exit as .env file not found
+            }
+        } catch (e) {
+            console.error(`ConfigService: exception initializing env file: ${e.toString}`, e);
+        }
         dotenv.config({
-            path: ".env"
+            path: this.ENV_FILE_NAME
         });
         console.log(`ConfigService : Environment : ${process.env && process.env["NODE_ENV"]}`);
     }
