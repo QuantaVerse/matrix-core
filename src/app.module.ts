@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { AdvisorSimModule } from "./advisor.sim/advisor.sim.module";
-import { AdvisorModule } from "./advisor/advisor.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { AdvisorSimModule } from "./modules/advisor.sim/advisor.sim.module";
+import { AdvisorModule } from "./modules/advisor/advisor.module";
 import { ConfigService } from "./shared/services/config.service";
 import { SharedModule } from "./shared/shared.module";
 

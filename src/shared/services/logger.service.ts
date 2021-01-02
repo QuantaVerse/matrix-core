@@ -5,7 +5,7 @@ import * as colors from "colors";
 import { ConfigService } from "./config.service";
 import { LogWriterService } from "./log.writer.service";
 
-@Injectable({ scope: Scope.DEFAULT })
+@Injectable({ scope: Scope.TRANSIENT })
 export class CustomLoggerService extends Logger {
     private readonly _logger: Bunyan;
 

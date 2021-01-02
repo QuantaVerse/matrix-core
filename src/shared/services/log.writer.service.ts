@@ -1,9 +1,9 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger, Scope } from "@nestjs/common";
 import * as Bunyan from "bunyan";
 
 import { ConfigService } from "./config.service";
 
-@Injectable()
+@Injectable({ scope: Scope.DEFAULT })
 export class LogWriterService extends Logger {
     private readonly _logWriter: Bunyan;
 

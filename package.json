@@ -97,7 +97,7 @@
     "lint-staged": {
         "{src,test}/**/*.{js,ts}": [
             "npm run format",
-            "npm run lint",
+            "npm run lint:fix",
             "git add ."
         ]
     },
@@ -133,7 +133,8 @@
         "url": "https://github.com/QuantaVerse/matrix-core.git"
     },
     "keywords": [
-        "matrix"
+        "matrix",
+        "matrix-core"
     ],
     "bugs": {
         "url": "https://github.com/QuantaVerse/matrix-core/issues"

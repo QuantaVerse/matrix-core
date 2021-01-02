@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 
-import { CustomLoggerService } from "../shared/services/logger.service";
+import { CustomLoggerService } from "../../shared/services/logger.service";
 import { AdvisorSimService } from "./advisor.sim.service";
 
 @Controller("advisor/simulation")
