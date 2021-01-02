@@ -1,11 +1,7 @@
 module.exports = {
     "plugins": [
         "@semantic-release/commit-analyzer",
-        "@semantic-release/release-notes-generator",
-        ["@semantic-release/github", {
-            "assets": ["dist/**"]
-        }],
-        "@semantic-release/git"
+        "@semantic-release/release-notes-generator"
     ],
-    "preset": "angular"
+    "preset": "express"
 }
