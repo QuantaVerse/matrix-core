@@ -1,24 +1,37 @@
 {
     "name": "matrix-core",
     "version": "0.0.1",
-    "description": "",
+    "description": "Core backend service for Matrix application",
     "author": "Pritam Sarkar",
     "private": false,
     "license": "GPL-3.0-or-later",
     "scripts": {
-        "prebuild": "rimraf dist",
+        "prebuild": "rimraf dist && tsc -p tsconfig.build.json",
+        "commit": "npx git-cz",
         "build": "nest build",
-        "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+        "release": "npx semantic-release",
+        "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
+        "lint": "eslint '{src,apps,libs,test}/**/*.ts'",
+        "lint:fix": "eslint '{src,apps,libs,test}/**/*.ts' --fix",
         "start": "nest start",
-        "start:dev": "nest start --watch",
-        "start:debug": "nest start --debug --watch",
+        "start:dev": "npx tsc-watch -p tsconfig.build.json --onSuccess 'node dist/main.js'",
+        "start:debug": "tsc-watch -p tsconfig.build.json --onSuccess 'node --inspect-brk dist/main.js'",
         "start:prod": "node dist/main",
-        "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+        "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+        "migration:generate": "ts-node node_modules/typeorm/cli.js migration:generate -f ormconfig -d src/migrations -n",
+        "migration:revert": "ts-node node_modules/typeorm/cli.js migration:revert -f ormconfig",
+        "migration:create": "ts-node node_modules/typeorm/cli.js migration:create -f ormconfig -d src/migrations -n",
+        "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -f ormconfig",
+        "schema:drop": "ts-node node_modules/typeorm/cli.js schema:drop -f ormconfig",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json"
+    },
+    "engines": {
+        "node": ">=14.15.0",
+        "npm": ">=6.14.0"
     },
     "dependencies": {
         "@nestjs/common": "^7.0.0",
@@ -28,29 +41,51 @@
         "@nestjs/platform-express": "^7.0.0",
         "@nestjs/platform-fastify": "7.5.4",
         "@nestjs/swagger": "4.7.5",
+        "@nestjs/typeorm": "7.1.5",
         "bunyan": "1.8.14",
         "bunyan-format": "0.2.1",
         "class-transformer": "0.3.1",
         "class-validator": "0.12.2",
+        "dotenv": "8.2.0",
+        "fastify-helmet": "5.0.3",
+        "fastify-rate-limit": "4.1.0",
         "fastify-swagger": "3.5.0",
+        "morgan": "1.10.0",
+        "pg": "8.5.1",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",
-        "rxjs": "^6.5.4"
+        "rxjs": "^6.5.4",
+        "semantic-release": "17.3.1",
+        "typeorm": "0.2.29"
     },
     "devDependencies": {
+        "@commitlint/cli": "11.0.0",
+        "@commitlint/config-conventional": "11.0.0",
+        "@commitlint/lint": "11.0.0",
         "@nestjs/cli": "^7.0.0",
         "@nestjs/schematics": "^7.0.0",
         "@nestjs/testing": "^7.0.0",
+        "@semantic-release/changelog": "5.0.1",
+        "@semantic-release/commit-analyzer": "8.0.1",
+        "@semantic-release/git": "9.0.0",
+        "@semantic-release/github": "7.2.0",
+        "@semantic-release/npm": "7.0.9",
+        "@semantic-release/release-notes-generator": "9.0.1",
         "@types/express": "^4.17.3",
         "@types/jest": "26.0.10",
         "@types/node": "^13.9.1",
         "@types/supertest": "^2.0.8",
         "@typescript-eslint/eslint-plugin": "3.9.1",
         "@typescript-eslint/parser": "3.9.1",
+        "cz-conventional-changelog": "3.3.0",
         "eslint": "7.7.0",
         "eslint-config-prettier": "^6.10.0",
         "eslint-plugin-import": "^2.20.1",
+        "eslint-plugin-simple-import-sort": "6.0.1",
+        "git-cz": "4.7.6",
+        "husky": "4.3.5",
         "jest": "26.4.2",
+        "lint-staged": "10.5.3",
         "prettier": "^1.19.1",
         "supertest": "^4.0.2",
         "ts-jest": "26.2.0",
@@ -58,6 +93,26 @@
         "ts-node": "9.0.0",
         "tsconfig-paths": "^3.9.0",
         "typescript": "^3.7.4"
+    },
+    "lint-staged": {
+        "{src,test}/**/*.{js,ts}": [
+            "npm run format",
+            "npm run lint:fix",
+            "git add ."
+        ]
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog",
+            "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+        }
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+            "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+        }
     },
     "jest": {
         "moduleFileExtensions": [
@@ -77,8 +132,16 @@
         "type": "git",
         "url": "https://github.com/QuantaVerse/matrix-core.git"
     },
+    "keywords": [
+        "matrix",
+        "matrix-core"
+    ],
+    "bugs": {
+        "url": "https://github.com/QuantaVerse/matrix-core/issues"
+    },
+    "homepage": "https://github.com/QuantaVerse/matrix-core#readme",
     "volta": {
-        "node": "14.15.1",
-        "npm": "6.14.9"
+        "node": "14.15.3",
+        "npm": "6.14.10"
     }
 }

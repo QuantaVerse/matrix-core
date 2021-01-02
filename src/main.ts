@@ -1,36 +1,56 @@
 import { NestFactory } from "@nestjs/core";
-import { MatrixCoreModule } from "./matrix.core.module";
 import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { LoggerService } from "@nestjs/common/services/logger.service";
-import { CustomLogger } from "./logger/custom.logger";
+import helmet from "fastify-helmet";
+import fastifyRateLimit from "fastify-rate-limit";
+import * as morgan from "morgan";
+
+import { AppModule } from "./app.module";
+import { EnvironmentEnum } from "./common/enums/environment.enum";
+import { fetchMorganOptions, MORGAN_CUSTOM_FORMAT } from "./config/logging/morgan.config";
+import { fetchCORSOptions } from "./config/security/cors.config";
+import { fetchHelmetOptions } from "./config/security/helmet.config";
+import { fetchRateLimiterOptions } from "./config/security/rate.limiter.config";
+import { setupSwagger } from "./config/swagger/swagger.setup";
+import { APPLICATION_START_TIMER_STRING } from "./constants/app.constants";
+import { ConfigService } from "./shared/services/config.service";
+import { CustomLoggerService } from "./shared/services/logger.service";
+import { SharedModule } from "./shared/shared.module";
+
+console.time(APPLICATION_START_TIMER_STRING);
 
 async function bootstrap() {
-    const customLogger: LoggerService = new CustomLogger();
+    console.log(`Starting application bootstrap`);
 
-    const app = await NestFactory.create<NestFastifyApplication>(
-        MatrixCoreModule,
-        new FastifyAdapter(),
-        {
-            logger: customLogger
-        }
-    );
-    app.useLogger(customLogger);
+    const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
+        cors: fetchCORSOptions()
+    });
 
-    const options = new DocumentBuilder()
-        .setTitle("Matrix Core")
-        .setDescription("All OpenAPI specs for Matrix Core")
-        .setVersion("0.0.1")
-        .addTag("matrix")
-        .build();
-    const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup("swagger", app, document);
+    const configService = app.select(SharedModule).get(ConfigService);
+    const loggerService = await app.select(SharedModule).resolve(CustomLoggerService);
+
+    // common logger middleware
+    app.useLogger(loggerService);
+    // HTTP request logger middleware
+    app.use(morgan(`${MORGAN_CUSTOM_FORMAT}`, fetchMorganOptions(loggerService)));
+
+    // add helmet security via Fastify plugin
+    await app.register(helmet, fetchHelmetOptions());
+    // brute force protection via Fastify plugin
+    await app.register(fastifyRateLimit, fetchRateLimiterOptions());
+
+    if ([EnvironmentEnum.Development, EnvironmentEnum.Staging].includes(configService.nodeEnv)) {
+        setupSwagger(app, configService.swaggerConfig);
+    }
 
     // By default, Fastify listens only on the localhost 127.0.0.1 interface (read more).
     // If you want to accept connections on other hosts, you should specify '0.0.0.0' in the listen() call
-    await app.listen(3000, '0.0.0.0');
+    const port = configService.getNumber("PORT") || 3000;
+    const host = configService.get("HOST") || "127.0.0.1";
+    await app.listen(port, host);
     console.log(`Application is running on: ${await app.getUrl()}`);
 }
+
 bootstrap().then(() => {
-    console.log(`Bootstrap completed : MatrixCoreModule loaded`);
+    console.log(`Bootstrap completed : AppModule loaded`);
+    console.timeEnd(APPLICATION_START_TIMER_STRING);
 });

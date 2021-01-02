@@ -1,17 +1,18 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { MatrixCoreController } from "../../src/matrix.core.controller";
-import { MatrixCoreService } from "../../src/matrix.core.service";
+
+import { AppController } from "../../src/app.controller";
+import { AppService } from "../../src/app.service";
 
 describe("AppController", () => {
-    let matrixCoreController: MatrixCoreController;
+    let matrixCoreController: AppController;
 
     beforeEach(async () => {
         const app: TestingModule = await Test.createTestingModule({
-            controllers: [MatrixCoreController],
-            providers: [MatrixCoreService]
+            controllers: [AppController],
+            providers: [AppService]
         }).compile();
 
-        matrixCoreController = app.get<MatrixCoreController>(MatrixCoreController);
+        matrixCoreController = app.get<AppController>(AppController);
     });
 
     describe("root", () => {
