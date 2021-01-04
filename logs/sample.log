@@ -1,0 +1,9 @@
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"AppController {}:","msg":"{ context: 'RoutesResolver' }","time":"2021-01-04T13:07:41.333Z","v":0}
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"Mapped {/hello, GET} route","msg":"{ context: 'RouterExplorer' }","time":"2021-01-04T13:07:41.337Z","v":0}
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"Mapped {/hello/delayed, GET} route","msg":"{ context: 'RouterExplorer' }","time":"2021-01-04T13:07:41.397Z","v":0}
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"Mapped {/hello/exception, GET} route","msg":"{ context: 'RouterExplorer' }","time":"2021-01-04T13:07:41.398Z","v":0}
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"AdvisorController {/advisor}:","msg":"{ context: 'RoutesResolver' }","time":"2021-01-04T13:07:41.398Z","v":0}
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"Mapped {/advisor/health, GET} route","msg":"{ context: 'RouterExplorer' }","time":"2021-01-04T13:07:41.401Z","v":0}
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"AdvisorSimController {/advisor/simulation}:","msg":"{ context: 'RoutesResolver' }","time":"2021-01-04T13:07:41.402Z","v":0}
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"Mapped {/advisor/simulation/health, GET} route","msg":"{ context: 'RouterExplorer' }","time":"2021-01-04T13:07:41.404Z","v":0}
+{"name":"matrix-core","hostname":"Medlifes-MBP-68d6","pid":73333,"level":30,"context":"Nest application successfully started","msg":"{ context: 'NestApplication' }","time":"2021-01-04T13:07:41.411Z","v":0}
