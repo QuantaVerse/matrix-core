@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { TerminusModule } from "@nestjs/terminus";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AppController } from "./app.controller";
@@ -16,6 +17,7 @@ import { SharedModule } from "./shared/shared.module";
             useFactory: (configService: ConfigService) => configService.typeOrmConfig,
             inject: [ConfigService]
         }),
+        TerminusModule,
         AdvisorModule,
         AdvisorSimModule
     ],
