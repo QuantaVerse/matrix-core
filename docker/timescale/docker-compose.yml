@@ -7,8 +7,8 @@ services:
       - 5432:5432
     volumes:
       - type: bind
-        source: ./postgres-volume
-        target: /var/lib/postgresql
+        source: ./postgres-volume/data
+        target: /var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
       PG_MODE: primary
