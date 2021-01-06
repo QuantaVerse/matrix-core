@@ -22,13 +22,13 @@ export class CustomLoggerService extends Logger {
 
     public debug(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.info({ context }, ...message.map(msg => colors.blue(msg)));
+        this._logger.info({ context }, ...message.map((msg) => colors.blue(msg)));
         this._logWriterService.debug({ context }, ...message);
     }
 
     public verbose(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.info({ context }, ...message.map(msg => colors.black(msg)));
+        this._logger.info({ context }, ...message.map((msg) => colors.black(msg)));
         this._logWriterService.verbose({ context }, ...message);
     }
 
@@ -40,19 +40,19 @@ export class CustomLoggerService extends Logger {
 
     public warn(message: any | any[], context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.warn({ context }, ...message.map(msg => colors.yellow(msg)));
+        this._logger.warn({ context }, ...message.map((msg) => colors.yellow(msg)));
         this._logWriterService.warn({ context }, ...message);
     }
 
     public error(message: any | any[], trace?: string | undefined, context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.error({ context, trace }, ...message.map(msg => colors.red(msg)));
+        this._logger.error({ context, trace }, ...message.map((msg) => colors.red(msg)));
         this._logWriterService.error({ context }, ...message);
     }
 
     public track(message: any | any[], error: Error, trace?: string | undefined, context: string | undefined = this.context) {
         message = Array.isArray(message) ? message : [message];
-        this._logger.error({ context, trace, err: error }, ...message.map(msg => colors.red(msg)));
+        this._logger.error({ context, trace, err: error }, ...message.map((msg) => colors.red(msg)));
         this._logWriterService.track({ context }, error, ...message);
     }
 }

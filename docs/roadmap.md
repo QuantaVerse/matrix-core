@@ -1,8 +1,11 @@
-- [ ] dev init script
-- [ ] docker init
-- [ ] db init
+- [x] dev init script
+- [x] docker init
+- [x] db init script
+- [ ] fix release
 - [ ] config nats
+- [ ] migration tests and fixes
 - [ ] modules in module folder
 - [ ] start code for advisor
+- [ ] start code for advisor simulator
 - [ ] document advisor
 

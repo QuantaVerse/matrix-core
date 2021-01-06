@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  matrix-core-postgres:
+    image: timescale/timescaledb:2.0.0-pg12
+    ports:
+      - 5432:5432
+    volumes:
+      - type: bind
+        source: ./postgres-volume/data
+        target: /var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+      PG_MODE: primary
+      PG_PRIMARY_USER: postgres
+      PG_PRIMARY_PASSWORD: password
+      PG_DATABASE: matrix
+      PG_USER: postgres
+      PG_PASSWORD: password
+      PG_ROOT_PASSWORD: password
+      PG_PRIMARY_PORT: 5432
+    networks: ["matrix-core-pg-network"]
+
+  matrix-core-pgadmin4:
+    image: dpage/pgadmin4:latest
+    ports:
+      - 5050:80
+    volumes:
+      - type: bind
+        source: ./pgadmin4-volume
+        target: /var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@matrix.com
+      PGADMIN_DEFAULT_PASSWORD: admin@123
+      PGADMIN_SETUP_EMAIL: admin
+      PGADMIN_SETUP_PASSWORD: password
+      SERVER_PORT: 5050
+    depends_on: ["matrix-core-postgres"]
+    networks: ["matrix-core-pg-network"]
+
+networks:
+  matrix-core-pg-network:
+    name: matrix-core-pg-network

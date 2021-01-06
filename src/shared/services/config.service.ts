@@ -102,13 +102,13 @@ export class ConfigService {
 
         if ((module as any).hot) {
             const entityContext = (require as any).context("./../../modules", true, /\.entity\.ts$/);
-            entities = entityContext.keys().map(id => {
+            entities = entityContext.keys().map((id) => {
                 const entityModule = entityContext(id);
                 const [entity] = Object.values(entityModule);
                 return entity;
             });
             const migrationContext = (require as any).context("./../../migrations", false, /\.ts$/);
-            migrations = migrationContext.keys().map(id => {
+            migrations = migrationContext.keys().map((id) => {
                 const migrationModule = migrationContext(id);
                 const [migration] = Object.values(migrationModule);
                 return migration;
