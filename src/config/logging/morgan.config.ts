@@ -8,7 +8,7 @@ export const MORGAN_CUSTOM_FORMAT =
 export function fetchMorganOptions(loggerService: CustomLoggerService): morgan.Options {
     return {
         stream: {
-            write: message => {
+            write: (message) => {
                 loggerService.log(message);
             }
         }

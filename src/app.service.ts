@@ -9,7 +9,7 @@ export class AppService {
     }
 
     sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     async getHello(): Promise<string> {
