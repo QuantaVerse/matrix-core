@@ -5,7 +5,7 @@ import { HealthCheckResult } from "@nestjs/terminus/dist/health-check/health-che
 import { AppService } from "./app.service";
 import { CustomLoggerService } from "./shared/services/logger.service";
 
-@Controller()
+@Controller("app/v1")
 export class AppController {
     constructor(
         private readonly _appService: AppService,
