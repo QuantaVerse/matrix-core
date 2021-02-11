@@ -39,7 +39,7 @@
         "@nestjs/cqrs": "7.0.1",
         "@nestjs/mapped-types": "0.3.0",
         "@nestjs/platform-express": "7.6.7",
-        "@nestjs/platform-fastify": "7.6.7",
+        "@nestjs/platform-fastify": "7.6.12",
         "@nestjs/swagger": "4.7.12",
         "@nestjs/terminus": "7.1.0",
         "@nestjs/typeorm": "7.1.5",
