@@ -1,0 +1,107 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: eslint
+    versions:
+    - 7.20.0
+    - 7.21.0
+    - 7.22.0
+    - 7.23.0
+    - 7.24.0
+  - dependency-name: husky
+    versions:
+    - 5.1.1
+    - 5.1.2
+    - 5.1.3
+    - 5.2.0
+  - dependency-name: ts-jest
+    versions:
+    - 26.5.2
+    - 26.5.3
+    - 26.5.4
+  - dependency-name: "@commitlint/lint"
+    versions:
+    - 12.0.0
+    - 12.0.1
+  - dependency-name: "@commitlint/cli"
+    versions:
+    - 12.0.0
+    - 12.0.1
+  - dependency-name: "@commitlint/config-conventional"
+    versions:
+    - 12.0.0
+    - 12.0.1
+  - dependency-name: fastify-rate-limit
+    versions:
+    - 5.3.0
+    - 5.4.1
+  - dependency-name: rxjs
+    versions:
+    - 6.6.6
+  - dependency-name: "@nestjs/cli"
+    versions:
+    - 7.5.6
+  - dependency-name: typeorm
+    versions:
+    - 0.2.31
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.25
+    - 14.14.26
+    - 14.14.28
+    - 14.14.30
+    - 14.14.31
+  - dependency-name: "@typescript-eslint/parser"
+    versions:
+    - 4.14.2
+    - 4.15.0
+    - 4.15.1
+  - dependency-name: "@typescript-eslint/eslint-plugin"
+    versions:
+    - 4.14.2
+    - 4.15.0
+    - 4.15.1
+  - dependency-name: "@nestjs/core"
+    versions:
+    - 7.6.11
+    - 7.6.12
+    - 7.6.8
+    - 7.6.9
+  - dependency-name: "@nestjs/platform-fastify"
+    versions:
+    - 7.6.11
+    - 7.6.12
+    - 7.6.8
+    - 7.6.9
+  - dependency-name: "@nestjs/platform-express"
+    versions:
+    - 7.6.11
+    - 7.6.12
+    - 7.6.8
+    - 7.6.9
+  - dependency-name: "@nestjs/testing"
+    versions:
+    - 7.6.11
+    - 7.6.12
+  - dependency-name: "@nestjs/common"
+    versions:
+    - 7.6.11
+    - 7.6.12
+  - dependency-name: fastify-swagger
+    versions:
+    - 4.0.1
+    - 4.1.1
+    - 4.2.0
+    - 4.3.0
+  - dependency-name: ts-loader
+    versions:
+    - 8.0.15
+    - 8.0.16
+  - dependency-name: fastify-helmet
+    versions:
+    - 5.2.0
