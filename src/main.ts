@@ -28,6 +28,9 @@ async function bootstrap() {
     const configService = app.select(SharedModule).get(ConfigService);
     const loggerService = await app.select(SharedModule).resolve(CustomLoggerService);
 
+    // set global prefix
+    app.setGlobalPrefix(configService.globalPrefixV1);
+
     // common logger middleware
     app.useLogger(loggerService);
     // HTTP request logger middleware

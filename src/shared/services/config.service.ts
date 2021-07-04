@@ -40,6 +40,10 @@ export class ConfigService {
         return getEnvironmentEnum(this.get("NODE_ENV") || "development");
     }
 
+    public get globalPrefixV1(): string {
+        return this.get("GLOBAL_PREFIX_V1");
+    }
+
     public get swaggerConfig(): ISwaggerConfigInterface {
         return {
             path: this.get("SWAGGER_PATH") || "swagger",
